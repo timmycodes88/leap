@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: 'LEAP',
   description: 'An app to reinforce good habits.',
   manifest: '/manifest.json',
-  themeColor: '#000000',
+  themeColor: '#1f2937',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
