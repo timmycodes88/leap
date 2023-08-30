@@ -4,12 +4,13 @@ import Input from '@/components/ui/Input'
 import { createUser } from '@/lib/actions/user.actions'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { set } from 'zod'
 
 export default function Step1() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [username, setUsername] = useState('')
-  const [errorMessage, setErrorMessage] = useState('Please enter a username.')
+  const [errorMessage, setErrorMessage] = useState('')
 
   const onSubmit = async () => {
     if (!username) return setErrorMessage('Please enter a username.')
@@ -18,9 +19,11 @@ export default function Step1() {
     if (username.length > 16)
       return setErrorMessage('Username must be less than 16 characters.')
     setLoading(true)
+    setErrorMessage('')
     try {
-      await createUser(username)
-      router.push('/onboarding/2')
+      const {success, message} = await createUser(username)
+      if (!success) setErrorMessage(message || "Something didn't work.")
+      else router.push('/onboarding/2')
     } catch (err) {
       console.log(err)
       setErrorMessage('Unexpected error, please try again.')
