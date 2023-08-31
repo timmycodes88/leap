@@ -9,7 +9,7 @@ export default function BottomNav() {
   const pathname = usePathname()
 
   return (
-    <nav className='fixed flex justify-around bottom-0 p-2 pb-8 bg-gray-800 z-10 w-full backdrop-blur'>
+    <nav className='fixed flex justify-around bottom-0 p-2 pb-8 bg-gray-800/50 z-10 w-full backdrop-blur'>
       {NavItems.map(({ route, icon }) => {
         const isActive = pathname === route
         return (
