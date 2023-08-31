@@ -19,7 +19,7 @@ export default function AdaptiveButton({
   if (type === 'team') return null
   return (
     <button
-      className={`hover:bg-green-600 fixed z-20 right-4 bottom-[6.5rem] rounded-full p-4 bg-green-500 flex items-center justify-center ${
+      className={`hover:bg-green-600 fixed z-20 right-4 bottom-[6.5rem] rounded-full p-6 bg-green-500 flex items-center justify-center ${
         disabled && 'bg-gray-400 hover:bg-gray-400'
       }`}
       disabled={disabled}
