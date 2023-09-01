@@ -25,7 +25,7 @@ export default function AdaptiveButton({
 }: AdaptiveButtonProps) {
   const [loading, setLoading] = useState(false)
   const check = async () => {
-    if (disabled) return
+    if (disabled || type !== 'waiting') return
     setLoading(true)
     try {
       const success = await checkIn()
