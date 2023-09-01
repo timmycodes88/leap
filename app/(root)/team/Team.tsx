@@ -12,9 +12,13 @@ export default function Team({ members, teamId, teamName }: TeamProps) {
   return (
     <div className='flex flex-col gap-4'>
       <Card>
-        <h2 className='font-semibold text-3xl text-center'>
-          {teamName} - <span className='font-normal'>{teamId}</span>
-        </h2>
+        <div className='flex justify-between items-center'>
+          <div className='text-lg font-semibold text-green-500'>{teamName}</div>
+          <div className='flex flex-col text-center'>
+            <span>Team ID</span>
+            <span className='text-gray-500'>{teamId}</span>
+          </div>
+        </div>
       </Card>
       {members.map(member => (
         <Profile key={member.id} user={member} teamPage />

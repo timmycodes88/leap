@@ -10,10 +10,11 @@ interface SetTimeProps {
 }
 
 export default function SetTime({ currTime }: SetTimeProps) {
-  console.log('SetTime.tsx: SetTimeProps: currTime: ', currTime)
   const [time, setTime] = useState(currTime || '00:00')
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: any) => {
+    if (Number(e.target.value.split(':')[0]) >= 12)
+      return toast('How bout no.', { icon: '🤔' })
     setTime(e.target.value)
   }
 
@@ -21,7 +22,9 @@ export default function SetTime({ currTime }: SetTimeProps) {
     const t = setTimeout(async () => {
       try {
         if (new Date().getHours() < 12)
-          toast.error('You can only update your time after 12:00 PM.')
+          return toast.error(
+            'You can only update your wake up time after 12:00 PM.'
+          )
         const success = await updateTime(time)
         if (!success) toast.error('Something went wrong.')
         else toast.success('Updated time.')
