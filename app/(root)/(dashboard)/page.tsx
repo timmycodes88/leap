@@ -4,6 +4,7 @@ import QuoteBox from '@/components/layout/QuoteBox'
 import Heading from '@/components/shared/Heading'
 import { getUser } from '@/lib/actions/user.actions'
 import { redirect } from 'next/navigation'
+import { updateButton } from '@/lib/actions/leap.actions'
 
 export default async function page() {
   const user = await getUser()
