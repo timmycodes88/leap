@@ -1,6 +1,7 @@
 'use client'
 
 import { checkIn } from '@/lib/actions/user.actions'
+import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
@@ -40,26 +41,15 @@ export default function AdaptiveButton({
 
   if (type === 'team') return null
   return (
-    <>
-      {disabled || loading ? (
-        <button
-          className={
-            'bg-gray-400 fixed z-20 right-4 bottom-[6.5rem] rounded-full p-4  flex items-center justify-center'
-          }
-          disabled
-        >
-          <Image src={icons[type]} width={36} height={36} alt='Icon' />
-        </button>
-      ) : (
-        <button
-          onClick={check}
-          className={
-            'hover:bg-green-800 fixed z-20 right-4 bottom-[6.5rem] rounded-full p-4 bg-green-500 flex items-center justify-center'
-          }
-        >
-          <Image src={icons[type]} width={36} height={36} alt='Icon' />
-        </button>
+    <button
+      onClick={check}
+      className={cn(
+        'hover:bg-green-800 fixed z-20 right-4 bottom-[6.5rem] rounded-full p-4 bg-green-500 flex items-center justify-center',
+        (disabled || loading) && 'bg-gray-400 hover:bg-gray-400'
       )}
-    </>
+      disabled={disabled || loading}
+    >
+      <Image src={icons[type]} width={36} height={36} alt='Icon' />
+    </button>
   )
 }
