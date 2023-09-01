@@ -54,13 +54,14 @@ export async function updateButton() {
 
       if (user.buttonType !== 'waiting') return
 
-      if (
-        (minutes >= 40 &&
-          nowHours === hours + 1 &&
-          nowMinutes > 10 &&
-          nowMinutes < 20) ||
-        (minutes < 40 && nowHours === hours && nowMinutes > minutes + 15)
-      ) {
+      const a =
+        minutes < 40 &&
+        ((nowHours === hours && nowMinutes > minutes + 15) || nowHours > hours)
+      const b =
+        minutes >= 40 &&
+        ((nowHours === hours + 1 && nowMinutes > 10) || nowHours > hours + 1)
+
+      if (a || b) {
         //Deactivate Users Button
         await User.findOneAndUpdate(
           { id: user.id },
