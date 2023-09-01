@@ -1,7 +1,7 @@
 'use client'
 
 import { updateTime } from '@/lib/actions/user.actions'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useUpdateEffect } from 'usehooks-ts'
 
@@ -15,16 +15,16 @@ export default function SetTime({ currTime }: SetTimeProps) {
   const handleChange = (e: any) => {
     if (Number(e.target.value.split(':')[0]) >= 12)
       return toast('How bout no.', { icon: '🤔' })
+    if (new Date().getHours() < 12)
+      return toast.error(
+        'You can only update your wake up time after 12:00 PM.'
+      )
     setTime(e.target.value)
   }
 
   useUpdateEffect(() => {
     const t = setTimeout(async () => {
       try {
-        if (new Date().getHours() < 12)
-          return toast.error(
-            'You can only update your wake up time after 12:00 PM.'
-          )
         const success = await updateTime(time)
         if (!success) toast.error('Something went wrong.')
         else toast.success('Updated time.')
