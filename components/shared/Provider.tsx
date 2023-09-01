@@ -11,8 +11,12 @@ export default function Provider() {
 
   //Update Buttons for All Users
   useEffect(() => {
-    const i = setInterval(() => updateButton(), 1000 * 60)
-    updateButton()
+    const i = setInterval(() => {
+      const userNow = new Date()
+      updateButton(userNow)
+    }, 1000 * 60)
+    const userNow = new Date()
+    updateButton(userNow)
     return () => clearInterval(i)
   }, [])
 
