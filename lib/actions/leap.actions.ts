@@ -16,7 +16,6 @@ export async function updateButton(userNow: Date) {
       const day = userNow.getDay()
       const nowHours = userNow.getHours()
       const nowMinutes = userNow.getMinutes()
-      console.log(nowHours, nowMinutes)
       if (day === 6) return
       if (day === 0) {
         await User.findOneAndUpdate(
