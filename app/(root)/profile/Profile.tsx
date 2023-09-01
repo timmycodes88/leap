@@ -32,8 +32,8 @@ export default function Profile({ user, teamPage }: ProfileProps) {
               <p>
                 {(user.wakeUpTime &&
                   (Number(user.wakeUpTime.split(':')[0]) < 11
-                    ? user.wakeUpTime.slice(1)
-                    : user.wakeUpTime)) ||
+                    ? user.wakeUpTime.slice(1) + 'am'
+                    : user.wakeUpTime + 'am')) ||
                   'Unset'}
               </p>
             ) : (
