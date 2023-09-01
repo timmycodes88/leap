@@ -7,8 +7,6 @@ import { connectToDB } from '../mongoose'
 export async function updateButton() {
   connectToDB()
 
-  console.log('\n\n\nupdateButton\n\n\n')
-
   try {
     const users = await User.find()
 
