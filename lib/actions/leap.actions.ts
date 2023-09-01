@@ -24,7 +24,7 @@ export async function updateButton() {
           { upsert: true }
         )
       }
-      if (nowHours > 13) {
+      if (nowHours >= 13) {
         await User.findOneAndUpdate(
           { id: user.id },
           { buttonType: 'disabled-waiting' },
