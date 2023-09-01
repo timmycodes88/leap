@@ -6,6 +6,9 @@ interface User {
   name: string
   username: string
   teamId?: string
+  wakeUpTime?: string
+  buttonType: 'waiting' | 'good' | 'bad' | 'disabled-waiting' | undefined
+  checkins?: boolean[]
 }
 
 const userSchema = new mongoose.Schema({
@@ -25,6 +28,16 @@ const userSchema = new mongoose.Schema({
   },
   teamId: {
     type: String,
+  },
+  wakeUpTime: {
+    type: String,
+  },
+  buttonType: {
+    type: String,
+  },
+  checkins: {
+    type: [Boolean],
+    default: [],
   },
 })
 

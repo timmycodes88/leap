@@ -16,6 +16,7 @@ export default async function page() {
       <Heading title='Team' />
       <Team
         teamId={user.teamId}
+        teamName={team.teamName}
         members={team.members.filter(
           (u: { username: string }) => u.username !== user.username
         )}
