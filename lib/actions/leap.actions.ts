@@ -4,16 +4,21 @@ import { revalidatePath } from 'next/cache'
 import User from '../models/user.model'
 import { connectToDB } from '../mongoose'
 
+const getLocalTime = () => new Date().getTime() + 300 * 60000
+
 export async function updateButton() {
   connectToDB()
+
+  console.log('\n\n\nupdateButton\n\n\n')
 
   try {
     const users = await User.find()
 
     users.forEach(async (user: User) => {
-      const day = new Date().getDay()
-      const nowHours = new Date().getHours()
-      const nowMinutes = new Date().getMinutes()
+      const day = new Date(getLocalTime()).getDay()
+      const nowHours = new Date(getLocalTime()).getHours()
+      const nowMinutes = new Date(getLocalTime()).getMinutes()
+      console.log(nowHours, nowMinutes)
       if (day === 6) return
       if (day === 0) {
         await User.findOneAndUpdate(
@@ -41,7 +46,11 @@ export async function updateButton() {
       const hours = parseInt(time[0])
       const minutes = parseInt(time[1])
 
-      if (nowHours === hours - 1) {
+      if (
+        nowHours === hours - 1 ||
+        (minutes < 40 && nowHours === hours && nowMinutes <= minutes + 15) ||
+        (minutes >= 40 && nowHours === hours + 1 && nowMinutes <= 10)
+      ) {
         //Activate Users Button
         await User.findOneAndUpdate(
           { id: user.id },
