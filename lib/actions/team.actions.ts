@@ -104,11 +104,11 @@ export async function getTeams() {
       model: User,
     })
 
-    if (!teams) return false
+    if (!teams) return []
 
     return teams
   } catch (err: any) {
     console.log(err)
-    return false
+    return []
   }
 }
