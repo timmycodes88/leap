@@ -65,10 +65,10 @@ export async function updateButton(
 
       const a =
         minutes < 40 &&
-        ((nowHours === hours && nowMinutes > minutes + 15) || nowHours > hours)
+        ((nowHours === hours && nowMinutes >= minutes + 15) || nowHours > hours)
       const b =
         minutes >= 40 &&
-        ((nowHours === hours + 1 && nowMinutes > 10) || nowHours > hours + 1)
+        ((nowHours === hours + 1 && nowMinutes >= 10) || nowHours > hours + 1)
 
       if (a || b) {
         //Deactivate Users Button
