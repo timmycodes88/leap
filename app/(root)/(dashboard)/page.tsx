@@ -5,6 +5,7 @@ import Heading from '@/components/shared/Heading'
 import { getUser } from '@/lib/actions/user.actions'
 import { redirect } from 'next/navigation'
 import { getTeams } from '@/lib/actions/team.actions'
+import Refresher from '@/components/shared/Refresher'
 
 export default async function page() {
   const user = await getUser()
@@ -15,6 +16,7 @@ export default async function page() {
 
   return (
     <div className='flex flex-col gap-4 h-full'>
+      <Refresher />
       <Heading title='Dashboard' />
       {user.buttonType && (
         <AdaptiveButton
