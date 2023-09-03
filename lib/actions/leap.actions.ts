@@ -4,18 +4,17 @@ import { revalidatePath } from 'next/cache'
 import User from '../models/user.model'
 import { connectToDB } from '../mongoose'
 
-export async function updateButton(userNow: Date) {
+export async function updateButton(
+  day: number,
+  nowHours: number,
+  nowMinutes: number
+) {
   connectToDB()
-
-  console.log('\n\n\nupdateButton\n\n\n')
 
   try {
     const users = await User.find()
 
     users.forEach(async (user: User) => {
-      const day = userNow.getDay()
-      const nowHours = userNow.getHours()
-      const nowMinutes = userNow.getMinutes()
       if (day === 6) return
       if (day === 0) {
         await User.findOneAndUpdate(

@@ -13,10 +13,16 @@ export default function Provider() {
   useEffect(() => {
     const i = setInterval(() => {
       const userNow = new Date()
-      updateButton(userNow)
+      const day = userNow.getDay()
+      const nowHours = userNow.getHours()
+      const nowMinutes = userNow.getMinutes()
+      updateButton(day, nowHours, nowMinutes)
     }, 1000 * 60)
     const userNow = new Date()
-    updateButton(userNow)
+    const day = userNow.getDay()
+    const nowHours = userNow.getHours()
+    const nowMinutes = userNow.getMinutes()
+    updateButton(day, nowHours, nowMinutes)
     return () => clearInterval(i)
   }, [])
 
