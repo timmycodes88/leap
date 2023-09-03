@@ -24,8 +24,11 @@ export default function Step1() {
       return setNameErrorMessage('Name must be less than 32 characters.')
     if (username.length > 16)
       return setErrorMessage('Username must be less than 16 characters.')
+
+
     setLoading(true)
     setErrorMessage('')
+    setNameErrorMessage('')
     try {
       const { success, message } = await createUser(name, username)
       if (!success) setErrorMessage(message || "Something didn't work.")
