@@ -16,19 +16,19 @@ export async function updateButton(
     const users = await User.find()
 
     users.forEach(async (user: User) => {
-      // if (day === 6) return
-      // if (day === 0) {
-      //   await User.findOneAndUpdate(
-      //     { id: user.id },
-      //     { $set: { checkins: [] } },
-      //     { upsert: true }
-      //   )
-      //   await Team.findOneAndUpdate(
-      //     { teamId: user.teamId },
-      //     { $set: { weeklyPoints: [] } },
-      //     { upsert: true }
-      //   )
-      // }
+      if (day === 6) return
+      if (day === 0) {
+        await User.findOneAndUpdate(
+          { id: user.id },
+          { $set: { checkins: [] } },
+          { upsert: true }
+        )
+        await Team.findOneAndUpdate(
+          { teamId: user.teamId },
+          { $set: { weeklyPoints: [] } },
+          { upsert: true }
+        )
+      }
       if (nowHours >= 13) {
         await User.findOneAndUpdate(
           { id: user.id },
