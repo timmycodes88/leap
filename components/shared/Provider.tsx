@@ -81,7 +81,7 @@ export default function Provider() {
       document.removeEventListener('touchstart', touchStart)
       document.removeEventListener('touchend', touchEnd)
     }
-  }, [pathname])
+  }, [pathname, router])
 
   return <Toaster />
 }

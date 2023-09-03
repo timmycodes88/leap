@@ -94,3 +94,21 @@ export async function getTeam(teamId: string) {
     return false
   }
 }
+
+export async function getTeams() {
+  connectToDB()
+
+  try {
+    const teams = await Team.find().populate({
+      path: 'members',
+      model: User,
+    })
+
+    if (!teams) return false
+
+    return teams
+  } catch (err: any) {
+    console.log(err)
+    return false
+  }
+}

@@ -4,40 +4,45 @@
 import { cn } from '@/lib/utils'
 import Card from './Card'
 
-export default function BarChart() {
+interface BarChartProps {
+  teams: any[]
+  userId: string
+}
+
+const colors = [
+  'bg-gradient-to-r from-cyan-500/70 to-blue-500/70',
+  'bg-gradient-to-r from-red-500/70 to-orange-500/70',
+  'bg-gradient-to-r from-green-900/70 to-green-500/70',
+  'bg-gradient-to-r from-purple-500/70 to-violet-500/70',
+]
+
+export default function BarChart({ teams, userId }: BarChartProps) {
   return (
     <Card>
       <div className='flex flex-col gap-4'>
         <h3 className='text-lg'>Leaderboard</h3>
         <div className='flex flex-col gap-2'>
-          <Bar
-            myTeam
-            teamName='The People'
-            progress={2}
-            color={'bg-gradient-to-r from-cyan-500/70 to-blue-500/70'}
-          />
-          <Bar
-            teamName='Big Frawgs'
-            progress={4}
-            color={'bg-gradient-to-r from-red-500/70 to-orange-500/70'}
-          />
-          <Bar
-            teamName='Error Masters'
-            progress={3}
-            color={'bg-gradient-to-r from-green-900/70 to-green-500/70'}
-          />
-          <Bar
-            teamName='Vibe Riders'
-            progress={5}
-            color={'bg-gradient-to-r from-purple-500/70 to-violet-500/70'}
-          />
+          {teams.map((team: any, i) => {
+            const color = colors[i % colors.length]
+            let myTeam
+            team.members.forEach((member: any) => {
+              if (member.id === userId) myTeam = true
+            })
+            return (
+              <Bar
+                key={i}
+                myTeam={myTeam}
+                teamName={team.teamName}
+                progress={team.weeklyPoints.length}
+                color={color}
+              />
+            )
+          })}
         </div>
       </div>
     </Card>
   )
 }
-
-// TODO: Find a way to implement colors for the bars
 
 interface BarProps {
   myTeam?: boolean

@@ -4,11 +4,14 @@ import QuoteBox from '@/components/layout/QuoteBox'
 import Heading from '@/components/shared/Heading'
 import { getUser } from '@/lib/actions/user.actions'
 import { redirect } from 'next/navigation'
+import { getTeams } from '@/lib/actions/team.actions'
 
 export default async function page() {
   const user = await getUser()
   if (!user) redirect('/onboarding/1')
   if (!user?.teamId) redirect('/onboarding/2')
+
+  const teams = await getTeams()
 
   return (
     <div className='flex flex-col gap-4 h-full'>
@@ -22,7 +25,7 @@ export default async function page() {
         />
       )}
       {/* {data?.quote && <QuoteBox quote={data.quote} author={data.author} />} */}
-      <BarChart />
+      <BarChart teams={teams} userId={user.id} />
     </div>
   )
 }

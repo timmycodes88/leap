@@ -17,6 +17,7 @@ const teamSchema = new mongoose.Schema({
       ref: 'User',
     },
   ],
+  weeklyPoints: [Number],
 })
 
 const Team = mongoose.models.Team || mongoose.model('Team', teamSchema)

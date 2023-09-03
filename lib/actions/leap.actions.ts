@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import User from '../models/user.model'
 import { connectToDB } from '../mongoose'
+import Team from '../models/team.model'
 
 export async function updateButton(
   day: number,
@@ -15,14 +16,19 @@ export async function updateButton(
     const users = await User.find()
 
     users.forEach(async (user: User) => {
-      if (day === 6) return
-      if (day === 0) {
-        await User.findOneAndUpdate(
-          { id: user.id },
-          { $set: { checkins: [] } },
-          { upsert: true }
-        )
-      }
+      // if (day === 6) return
+      // if (day === 0) {
+      //   await User.findOneAndUpdate(
+      //     { id: user.id },
+      //     { $set: { checkins: [] } },
+      //     { upsert: true }
+      //   )
+      //   await Team.findOneAndUpdate(
+      //     { teamId: user.teamId },
+      //     { $set: { weeklyPoints: [] } },
+      //     { upsert: true }
+      //   )
+      // }
       if (nowHours >= 13) {
         await User.findOneAndUpdate(
           { id: user.id },

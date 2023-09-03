@@ -4,6 +4,7 @@ import { auth } from '@clerk/nextjs'
 import User from '../models/user.model'
 import { connectToDB } from '../mongoose'
 import { revalidatePath } from 'next/cache'
+import Team from '../models/team.model'
 
 export async function createUser(
   name: string,
@@ -84,11 +85,28 @@ export async function checkIn() {
   if (!user.userId) return false
 
   try {
-    await User.findOneAndUpdate(
+    const mongoUser = await User.findOneAndUpdate(
       { id: user.userId },
       { $set: { buttonType: 'good' }, $push: { checkins: true } },
       { upsert: true }
     )
+
+    const team = await Team.findOne({ teamId: mongoUser.teamId }).populate({
+      path: 'members',
+      model: User,
+    })
+
+    const giveTeamPoint = team.members.every(
+      (member: any) => member.buttonType === 'good'
+    )
+
+    if (giveTeamPoint) {
+      await Team.findOneAndUpdate(
+        { teamId: mongoUser.teamId },
+        { $push: { weeklyPoints: 1 } },
+        { upsert: true }
+      )
+    }
 
     revalidatePath('/')
     revalidatePath('/profile')
