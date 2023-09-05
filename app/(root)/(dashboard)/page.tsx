@@ -26,7 +26,12 @@ export default async function page() {
           )}
         />
       )}
-      {/* {data?.quote && <QuoteBox quote={data.quote} author={data.author} />} */}
+      <QuoteBox
+        quote={
+          "They don't call em' lay in bed and snooze frogs, they are called LEAP Frogs!"
+        }
+        author={'Wes'}
+      />
       <BarChart
         teams={teams.sort(t => (t.teamId === user.teamId ? -1 : 1))}
         userId={user.id}
