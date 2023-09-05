@@ -6,8 +6,7 @@ import { getUser } from '@/lib/actions/user.actions'
 import { redirect } from 'next/navigation'
 import { getTeams } from '@/lib/actions/team.actions'
 import Refresher from '@/components/shared/Refresher'
-import Card from '@/components/layout/Card'
-import Test from './Test'
+
 
 export default async function page() {
   const user = await getUser()
