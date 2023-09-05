@@ -10,7 +10,7 @@ interface TeamProps {
 
 export default function Team({ members, teamId, teamName }: TeamProps) {
   return (
-    <div className='flex flex-col gap-4'>
+    <div className='flex flex-col gap-4 mb-20'>
       <Card>
         <div className='flex justify-between items-center'>
           <div className='text-lg font-semibold text-green-500'>{teamName}</div>
@@ -20,9 +20,17 @@ export default function Team({ members, teamId, teamName }: TeamProps) {
           </div>
         </div>
       </Card>
-      {members.map(member => (
-        <Profile key={member.id} user={member} teamPage />
-      ))}
+      <div className='h-[0.1rem] w-full bg-gray-500 rounded-full' />
+      {members.map((member, i) => {
+        return (
+          <Profile
+            last={i === members.length - 1}
+            key={member.id}
+            user={member}
+            teamPage
+          />
+        )
+      })}
     </div>
   )
 }

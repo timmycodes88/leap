@@ -6,21 +6,22 @@ import Image from 'next/image'
 interface ProfileProps {
   user: User
   teamPage?: boolean
+  last?: boolean
 }
 
 const icons = {
-  good: '/svg/check.svg',
-  bad: '/svg/no-touch.svg',
+  good: '/svg/check-white.svg',
+  bad: '/svg/no-touch-white.svg',
 }
 
-export default function Profile({ user, teamPage }: ProfileProps) {
+export default function Profile({ user, teamPage, last }: ProfileProps) {
   const checkins = user.checkins || []
   const blankFill = Array(5 - checkins.length).fill('blank')
 
   const checkinsArr = [...checkins, ...blankFill]
 
   return (
-    <div className='flex flex-col gap-4 mb-20'>
+    <div className='flex flex-col gap-4'>
       <Card>
         <div className='flex justify-between items-center gap-2'>
           <div className='flex flex-col'>
@@ -42,6 +43,7 @@ export default function Profile({ user, teamPage }: ProfileProps) {
           </div>
         </div>
       </Card>
+
       <Card>
         <h3 className='text-2xl font-semibold text-center mb-5'>Stats</h3>
         <div className='flex items-center justify-center gap-2'>
@@ -61,7 +63,7 @@ export default function Profile({ user, teamPage }: ProfileProps) {
           ))}
         </div>
       </Card>
-
+      {!last && <div className='h-[0.1rem] w-full bg-gray-500 rounded-full' />}
       {!teamPage && (
         <Card>
           <h3 className='text-2xl font-semibold text-center mb-5'>

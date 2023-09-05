@@ -27,7 +27,10 @@ export default async function page() {
         />
       )}
       {/* {data?.quote && <QuoteBox quote={data.quote} author={data.author} />} */}
-      <BarChart teams={teams} userId={user.id} />
+      <BarChart
+        teams={teams.sort(t => (t.teamId === user.teamId ? -1 : 1))}
+        userId={user.id}
+      />
     </div>
   )
 }
