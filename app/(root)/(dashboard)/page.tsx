@@ -38,10 +38,6 @@ export default async function page() {
         teams={teams.sort(t => (t.teamId === user.teamId ? -1 : 1))}
         userId={user.id}
       />
-      <Card>
-        <p>Text me @ 913-636-3773 if your time is not within a couple minutes of this time: </p>
-<Test />
-      </Card>
     </div>
   )
 }
