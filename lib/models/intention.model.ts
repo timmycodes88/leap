@@ -4,7 +4,7 @@ export interface IntentionType {
   _id: string
   content: string
   complete: boolean
-  date: Date
+  date: string
 }
 
 const intentionSchema = new mongoose.Schema({
