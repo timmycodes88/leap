@@ -6,6 +6,9 @@ import { getUser } from '@/lib/actions/user.actions'
 import { redirect } from 'next/navigation'
 import { getTeams } from '@/lib/actions/team.actions'
 import Refresher from '@/components/shared/Refresher'
+import { quotes } from '@/constants/constants'
+import { getQuote } from '@/lib/actions/quote.actions'
+import { QuoteType } from '@/lib/models/quote.model'
 
 export default async function page() {
   const user = await getUser()
@@ -13,6 +16,16 @@ export default async function page() {
   if (!user?.teamId) redirect('/onboarding/2')
 
   const teams = await getTeams()
+
+  const customQuote = await getQuote()
+
+  const date = new Date()
+  const quote =
+    customQuote && customQuote.quote && customQuote.author
+      ? customQuote
+      : quotes[
+          (date.getMonth() + date.getDay() + date.getFullYear()) % quotes.length
+        ]
 
   return (
     <div className='flex flex-col gap-4 h-full'>
@@ -26,12 +39,7 @@ export default async function page() {
           )}
         />
       )}
-      <QuoteBox
-        quote={
-          "They don't call em' lay in bed and snooze frogs, they are called LEAP Frogs!"
-        }
-        author={'Wes'}
-      />
+      <QuoteBox quote={quote.quote} author={quote.author} />
       <BarChart
         teams={teams.sort(t => (t.teamId === user.teamId ? -1 : 1))}
         userId={user.id}
