@@ -20,7 +20,7 @@ export default function Team({ members, teamId, teamName }: TeamProps) {
           </div>
         </div>
       </Card>
-      <div className='h-[0.1rem] w-full bg-gray-500 rounded-full' />
+      <div className='h-[0.1rem] w-full bg-gray-500/50 rounded-full' />
       {members.map((member, i) => {
         return (
           <Profile

@@ -37,7 +37,7 @@ export default function SetTime({ currTime }: SetTimeProps) {
 
   return (
     <input
-      className='bg-gray-700 outline-none p-2 rounded-xl [&::-webkit-calendar-picker-indicator]:invert'
+      className='bg-gray-700 outline-none p-2 rounded-xl'
       value={time}
       onChange={handleChange}
       type='time'

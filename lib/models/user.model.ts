@@ -43,6 +43,12 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  intentions: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Intention',
+    },
+  ],
 })
 
 const User = mongoose.models.User || mongoose.model('User', userSchema)

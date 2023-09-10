@@ -2,7 +2,7 @@ import SetTime from '@/components/forms/SetTime'
 import Card from '@/components/layout/Card'
 import User from '@/lib/models/user.model'
 import Image from 'next/image'
-
+import Intentions from './Intentions'
 interface ProfileProps {
   user: User
   teamPage?: boolean
@@ -63,15 +63,15 @@ export default function Profile({ user, teamPage, last }: ProfileProps) {
           ))}
         </div>
       </Card>
-      {!last && <div className='h-[0.1rem] w-full bg-gray-500 rounded-full' />}
+      {!last && (
+        <div className='h-[0.1rem] w-full bg-gray-500/50 rounded-full' />
+      )}
       {!teamPage && (
         <Card>
           <h3 className='text-2xl font-semibold text-center mb-5'>
             Intentions
           </h3>
-          <p className='text-center text-white/40'>
-            No intentions created yet.
-          </p>
+          <Intentions />
         </Card>
       )}
     </div>

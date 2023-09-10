@@ -3,6 +3,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Provider from '@/components/shared/Provider'
+import { ThemeProvider } from '@/components/providers/ThemeProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -27,10 +28,12 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang='en'>
+      <html lang='en' suppressHydrationWarning>
         <body className={inter.className}>
-          <Provider />
-          {children}
+          <ThemeProvider attribute='class' defaultTheme='dark'>
+            <Provider />
+            {children}
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>
