@@ -21,7 +21,7 @@ export default function Intention({
 
   const onCheck = async () => {
     setIsComplete(!complete)
-    const { error } = await checkIntention(_id, !complete)
+    const { error } = await checkIntention(JSON.parse(_id), !complete)
     if (error) {
       setIsComplete(complete)
       toast.error(error)
@@ -30,7 +30,7 @@ export default function Intention({
   }
 
   const onDelete = async () => {
-    const { error } = await deleteIntention(_id)
+    const { error } = await deleteIntention(JSON.parse(_id))
     if (error) return toast.error(error)
   }
 

@@ -20,7 +20,7 @@ export async function getIntentions() {
     })
 
     if (!user) return { error: 'User not found' }
-    console.log(user.intentions)
+
     return { intentions: user.intentions }
   } catch (err: any) {
     console.log(err)

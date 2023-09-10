@@ -12,8 +12,8 @@ export default async function Intentions() {
       <div className='flex flex-col gap-6'>
         {intentions.map((intention: IntentionType) => (
           <Intention
-            key={intention._id}
-            _id={intention._id}
+            key={JSON.stringify(intention._id)}
+            _id={JSON.stringify(intention._id)}
             content={intention.content}
             complete={intention.complete}
             date={intention.date}
