@@ -17,7 +17,7 @@ export default function Provider() {
       const nowHours = userNow.getHours()
       const nowMinutes = userNow.getMinutes()
       updateButton(day, nowHours, nowMinutes)
-    }, 1000 * 60)
+    }, 1000 * 15)
     const userNow = new Date()
     const day = userNow.getDay()
     const nowHours = userNow.getHours()

@@ -10,6 +10,7 @@ import { quotes } from '@/constants/constants'
 import { getQuote } from '@/lib/actions/quote.actions'
 import { QuoteType } from '@/lib/models/quote.model'
 
+
 export default async function page() {
   const user = await getUser()
   if (!user) redirect('/onboarding/1')
