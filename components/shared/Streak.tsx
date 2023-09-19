@@ -20,7 +20,7 @@ export default function Streak({
           : `${streak} day ${type} streak!`
       }
     >
-      <div className='flex select-none gap-1'>
+      <button className='flex gap-1'>
         <span>{streak || 0}</span>
         <span
           className={cn(
@@ -31,7 +31,7 @@ export default function Streak({
         >
           {!streak ? '🧊' : '🔥'}
         </span>
-      </div>
+      </button>
     </ActionTooltip>
   )
 }
