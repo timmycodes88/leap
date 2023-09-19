@@ -49,7 +49,7 @@ export default function SetIntentionModal() {
         <DialogFooter>
           <div className='flex w-full flex-col gap-8'>
             <textarea
-              onFocus={e => e.target.blur()}
+              onFocus={e => e.preventDefault()}
               className='opacity-0 max-h-0 -mb-8'
             />
             <textarea
