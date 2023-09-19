@@ -7,9 +7,19 @@ export default async function Intentions() {
 
   if (error) console.log('[GET INTENTIONS ERROR]: ', error)
 
+  const completed =
+    intentions?.filter((intention: IntentionType) => intention.complete)
+      .length || 0
+
   if (intentions?.length) {
     return (
       <div className='flex flex-col gap-6'>
+        <span className=' absolute top-5 right-3 flex gap-1'>
+          <span className='text-white/80'>
+            {completed}/{intentions.length}
+          </span>
+          <span>✅</span>
+        </span>
         {intentions.map((intention: IntentionType) => (
           <Intention
             key={JSON.stringify(intention._id)}
