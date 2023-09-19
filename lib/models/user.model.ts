@@ -9,6 +9,7 @@ interface User {
   wakeUpTime?: string
   buttonType: 'waiting' | 'good' | 'bad' | 'disabled-waiting' | undefined
   checkins?: boolean[]
+  streak: number
 }
 
 const userSchema = new mongoose.Schema({
@@ -49,6 +50,10 @@ const userSchema = new mongoose.Schema({
       ref: 'Intention',
     },
   ],
+  streak: {
+    type: Number,
+    default: 0,
+  },
 })
 
 const User = mongoose.models.User || mongoose.model('User', userSchema)

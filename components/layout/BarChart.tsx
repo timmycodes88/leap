@@ -3,6 +3,7 @@
 
 import { cn } from '@/lib/utils'
 import Card from './Card'
+import Streak from '../shared/Streak'
 
 interface BarChartProps {
   teams: any[]
@@ -35,6 +36,7 @@ export default function BarChart({ teams, userId }: BarChartProps) {
                 teamName={team.teamName}
                 progress={team.weeklyPoints.length}
                 color={color}
+                streak={team.streak || 0}
               />
             )
           })}
@@ -49,6 +51,7 @@ interface BarProps {
   teamName: string
   progress: 0 | 1 | 2 | 3 | 4 | 5
   color: string
+  streak: number
 }
 
 const progresses = {
@@ -60,17 +63,20 @@ const progresses = {
   5: 'w-full',
 }
 
-function Bar({ myTeam, teamName, progress, color }: BarProps) {
+function Bar({ myTeam, teamName, progress, color, streak }: BarProps) {
   return (
     <div className='flex flex-col gap-1'>
-      <p
-        className={cn(
-          'text-white text-xs',
-          myTeam && 'font-bold text-yellow-500'
-        )}
-      >
-        {teamName}
-      </p>
+      <div className='flex justify-between items-bottom'>
+        <p
+          className={cn(
+            'text-white text-sm w-fit',
+            myTeam && 'font-bold text-yellow-500'
+          )}
+        >
+          {teamName}
+        </p>
+        <Streak streak={streak} type='team' />
+      </div>
       <div className='relative rounded-full h-6 w-full bg-gray-600'>
         <div
           className={cn(

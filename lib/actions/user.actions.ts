@@ -87,7 +87,11 @@ export async function checkIn() {
   try {
     const mongoUser = await User.findOneAndUpdate(
       { id: user.userId },
-      { $set: { buttonType: 'good' }, $push: { checkins: true } },
+      {
+        $set: { buttonType: 'good' },
+        $push: { checkins: true },
+        $inc: { streak: 1 },
+      },
       { upsert: true }
     )
 
@@ -103,7 +107,7 @@ export async function checkIn() {
     if (giveTeamPoint) {
       await Team.findOneAndUpdate(
         { teamId: mongoUser.teamId },
-        { $push: { weeklyPoints: 1 } },
+        { $push: { weeklyPoints: 1 }, $inc: { streak: 1 } },
         { upsert: true }
       )
     }

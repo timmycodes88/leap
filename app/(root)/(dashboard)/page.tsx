@@ -5,11 +5,8 @@ import Heading from '@/components/shared/Heading'
 import { getUser } from '@/lib/actions/user.actions'
 import { redirect } from 'next/navigation'
 import { getTeams } from '@/lib/actions/team.actions'
-import Refresher from '@/components/shared/Refresher'
 import { quotes } from '@/constants/constants'
 import { getQuote } from '@/lib/actions/quote.actions'
-import { QuoteType } from '@/lib/models/quote.model'
-
 
 export default async function page() {
   const user = await getUser()
@@ -30,7 +27,6 @@ export default async function page() {
 
   return (
     <div className='flex flex-col gap-4 h-full'>
-      <Refresher />
       <Heading title='Dashboard' />
       {user.buttonType && (
         <AdaptiveButton
@@ -42,7 +38,9 @@ export default async function page() {
       )}
       <QuoteBox quote={quote.quote} author={quote.author} />
       <BarChart
-        teams={teams.sort(t => (t.teamId === user.teamId ? -1 : 1))}
+        teams={teams
+          .sort((t, t2) => t.progress - t2.progress)
+          .sort(t => (t.teamId === user.teamId ? -1 : 1))}
         userId={user.id}
       />
     </div>

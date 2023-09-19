@@ -3,6 +3,9 @@ import Card from '@/components/layout/Card'
 import User from '@/lib/models/user.model'
 import Image from 'next/image'
 import Intentions from './Intentions'
+import { cn } from '@/lib/utils'
+import ActionTooltip from '@/components/shared/ActionTooltip'
+import Streak from '@/components/shared/Streak'
 interface ProfileProps {
   user: User
   teamPage?: boolean
@@ -46,23 +49,27 @@ export default function Profile({ user, teamPage, last }: ProfileProps) {
 
       <Card>
         <h3 className='text-2xl font-semibold text-center mb-5'>Stats</h3>
-        <div className='flex items-center justify-center gap-2'>
-          {checkinsArr.map((status: 'blank' | boolean, i) => (
-            <div key={i}>
-              {status === 'blank' ? (
-                '_'
-              ) : (
-                <Image
-                  src={icons[status ? 'good' : 'bad']}
-                  width={20}
-                  height={20}
-                  alt='Icon'
-                />
-              )}
-            </div>
-          ))}
+        <div className='flex justify-around items-center gap-4 w-full'>
+          <div className='flex items-center justify-center gap-4'>
+            {checkinsArr.map((status: 'blank' | boolean, i) => (
+              <div key={i}>
+                {status === 'blank' ? (
+                  '_'
+                ) : (
+                  <Image
+                    src={icons[status ? 'good' : 'bad']}
+                    width={20}
+                    height={20}
+                    alt='Icon'
+                  />
+                )}
+              </div>
+            ))}
+          </div>
+          <Streak streak={user.streak || 0} />
         </div>
       </Card>
+
       {!last && (
         <div className='h-[0.1rem] w-full bg-gray-500/50 rounded-full' />
       )}

@@ -1,5 +1,14 @@
 import mongoose from 'mongoose'
 
+export interface TeamType {
+  _id: string
+  teamId: string
+  teamName: string
+  members: string[]
+  weeklyPoints: number[]
+  streak: number
+}
+
 const teamSchema = new mongoose.Schema({
   teamId: {
     type: String,
@@ -18,6 +27,10 @@ const teamSchema = new mongoose.Schema({
     },
   ],
   weeklyPoints: [Number],
+  streak: {
+    type: Number,
+    default: 0,
+  },
 })
 
 const Team = mongoose.models.Team || mongoose.model('Team', teamSchema)

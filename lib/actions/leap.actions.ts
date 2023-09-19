@@ -74,7 +74,15 @@ export async function updateButton(
         //Deactivate Users Button
         await User.findOneAndUpdate(
           { id: user.id },
-          { $set: { buttonType: 'bad' }, $push: { checkins: false } },
+          {
+            $set: { buttonType: 'bad', streak: 0 },
+            $push: { checkins: false },
+          },
+          { upsert: true }
+        )
+        await Team.findOneAndUpdate(
+          { teamId: user.teamId },
+          { $set: { streak: 0 } },
           { upsert: true }
         )
       }

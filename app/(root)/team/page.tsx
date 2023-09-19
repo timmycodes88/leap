@@ -20,6 +20,7 @@ export default async function page() {
         members={team.members.filter(
           (u: { username: string }) => u.username !== user.username
         )}
+        streak={team.streak || 0}
       />
       <AdaptiveButton type='team' />
     </div>
