@@ -12,12 +12,12 @@ export default function Streak({
     <ActionTooltip
       label={
         streak > 365
-          ? `${streak / 365} year streak!`
+          ? `${type === 'team' ? streak / 52 : streak / 20 / 12} year streak!`
           : streak > 30
-          ? `${streak / 30} month streak!`
+          ? `${type === 'team' ? streak / 4 : streak / 20} month streak!`
           : !streak
           ? 'No Streak 🥲'
-          : `${streak} day ${type} streak!`
+          : `${streak} ${type === 'team' ? 'week' : 'day'} streak!`
       }
     >
       <button className='flex gap-1'>

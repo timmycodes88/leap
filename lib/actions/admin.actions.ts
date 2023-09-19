@@ -12,7 +12,7 @@ export async function sendGlobalMessage(
   try {
     connectToDB()
 
-    const users = await User.find()
+    const users = await User.find({ pushSubscription: { $exists: true } })
     users.forEach(async user => {
       if (!user.pushSubscription) return
       await sendNotification(user.pushSubscription, {

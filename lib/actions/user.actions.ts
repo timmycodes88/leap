@@ -5,6 +5,7 @@ import User from '../models/user.model'
 import { connectToDB } from '../mongoose'
 import { revalidatePath } from 'next/cache'
 import Team from '../models/team.model'
+import { sendNotification } from '../sendNotification'
 
 export async function createUser(
   name: string,
@@ -105,11 +106,25 @@ export async function checkIn() {
     )
 
     if (giveTeamPoint) {
+      const giveTeamStreak = team.weeklyPoints.length === 4 ? 1 : 0
       await Team.findOneAndUpdate(
         { teamId: mongoUser.teamId },
-        { $push: { weeklyPoints: 1 }, $inc: { streak: 1 } },
+        { $push: { weeklyPoints: 1 }, $inc: { streak: giveTeamStreak } },
         { upsert: true }
       )
+      const users = await User.find({
+        teamId: team.teamId,
+        pushSubscription: { $exists: true },
+      })
+      users.forEach(async user => {
+        if (!user.pushSubscription) return
+        await sendNotification(user.pushSubscription, {
+          title: `Go ${team.name}! 🎉`,
+          options: {
+            body: 'Your team has earned a point for everyone checking in!',
+          },
+        })
+      })
     }
 
     revalidatePath('/')
