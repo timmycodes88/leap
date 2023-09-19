@@ -54,6 +54,9 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  pushSubscription: {
+    type: Object,
+  },
 })
 
 const User = mongoose.models.User || mongoose.model('User', userSchema)

@@ -1,5 +1,6 @@
 'use client'
 
+import useHydrate from '@/hooks/useHydrate'
 import { usePathname } from 'next/navigation'
 import {
   MutableRefObject,
@@ -52,20 +53,21 @@ export default function ActionTooltip({
       window.removeEventListener('resize', closeTooltip)
     }
   }, [isLeft, open])
-  return (
-    <>
-      {open &&
-        createPortal(
-          <Tooltip tooltipRef={tooltipRef} content={label} />,
-          document.body
-        )}
+  if (useHydrate())
+    return (
       <>
-        <button ref={buttonRef} onClick={onClick}>
-          {children}
-        </button>
+        {open &&
+          createPortal(
+            <Tooltip tooltipRef={tooltipRef} content={label} />,
+            document.body
+          )}
+        <>
+          <button ref={buttonRef} onClick={onClick}>
+            {children}
+          </button>
+        </>
       </>
-    </>
-  )
+    )
 }
 
 const Tooltip = ({

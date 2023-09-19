@@ -1,7 +1,7 @@
 import { getUser } from '@/lib/actions/user.actions'
 import { UserButton } from '@clerk/nextjs'
 import Link from 'next/link'
-import Button from '../ui/Button'
+import NotificationButton from '../shared/NotificationButton'
 
 export default async function Header() {
   const { isAdmin } = await getUser()
@@ -12,7 +12,10 @@ export default async function Header() {
         🐸&nbsp;&nbsp;LEAP
       </Link>
       {isAdmin && <Link href='/admin'>Admin</Link>}
-      <UserButton afterSignOutUrl='/landing' />
+      <div className='flex items-center gap-4'>
+        <NotificationButton />
+        <UserButton afterSignOutUrl='/landing' />
+      </div>
     </header>
   )
 }
