@@ -23,7 +23,7 @@ export default function NotificationButton() {
 
   useEffect(() => {
     if (status === 'default')
-      toast('Please Allow Notifications - Click the Bell', {
+      toast('Click the Bell', {
         icon: '🔔',
       })
   }, [status])
@@ -61,7 +61,7 @@ export default function NotificationButton() {
 
       if (error) return toast.error(error)
       reg.showNotification('Notifications Activated', {
-        body: 'Welcome to the future of LEAP - More coming...!',
+        body: 'Welcome to the future of LEAP!!!',
       })
     }
   }
