@@ -19,7 +19,7 @@ const icons = {
 
 export default function Profile({ user, teamPage, last }: ProfileProps) {
   const checkins = user.checkins || []
-  const blankFill = Array(5 - checkins.length).fill('blank')
+  const blankFill = new Array(5 - Math.min(checkins.length, 5)).fill('blank')
 
   const checkinsArr = [...checkins, ...blankFill]
 
