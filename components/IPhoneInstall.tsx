@@ -10,7 +10,7 @@ export default function IPhoneInstall() {
     return (
       <div className='fixed inset-0 bg-white z-50'>
         <Image
-          src='/add-to-home.png'
+          src='/iphone-tut.png'
           alt='add to home'
           width={500}
           height={500}
