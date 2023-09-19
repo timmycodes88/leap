@@ -35,15 +35,23 @@ export default function ActionTooltip({
       }px`
     }
 
+    const closeTooltip = () => setOpen(false)
+
     const handleClickOutside = (e: MouseEvent) => {
       if (tooltip && !tooltip.contains(e.target as Node)) {
-        setOpen(false)
+        closeTooltip()
       }
     }
 
     document.addEventListener('click', handleClickOutside)
-    return () => document.removeEventListener('click', handleClickOutside)
-  }, [open])
+    document.addEventListener('scroll', closeTooltip)
+    window.addEventListener('resize', closeTooltip)
+    return () => {
+      document.removeEventListener('click', handleClickOutside)
+      document.removeEventListener('scroll', closeTooltip)
+      window.removeEventListener('resize', closeTooltip)
+    }
+  }, [isLeft, open])
   return (
     <>
       {open &&
