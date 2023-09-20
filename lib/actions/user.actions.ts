@@ -1,11 +1,11 @@
-'use server'
+"use server"
 
-import { auth } from '@clerk/nextjs'
-import User from '../models/user.model'
-import { connectToDB } from '../mongoose'
-import { revalidatePath } from 'next/cache'
-import Team from '../models/team.model'
-import { sendNotification } from '../sendNotification'
+import { auth } from "@clerk/nextjs"
+import User from "../models/user.model"
+import { connectToDB } from "../mongoose"
+import { revalidatePath } from "next/cache"
+import Team from "../models/team.model"
+import { sendNotification } from "../sendNotification"
 
 export async function createUser(
   name: string,
@@ -13,16 +13,16 @@ export async function createUser(
 ): Promise<{ success: boolean; message?: string }> {
   const user = auth()
 
-  if (!user.userId) return { success: false, message: 'Not logged in' }
+  if (!user.userId) return { success: false, message: "Not logged in" }
 
   try {
     connectToDB()
 
     const existingUser = await User.findOne({ id: user.userId })
     if (existingUser)
-      return { success: false, message: 'User already has an account' }
+      return { success: false, message: "User already has an account" }
     const usernameTaken = await User.findOne({ username })
-    if (usernameTaken) return { success: false, message: 'Username taken' }
+    if (usernameTaken) return { success: false, message: "Username taken" }
 
     await User.create({
       id: user.userId,
@@ -65,12 +65,12 @@ export async function updateTime(time: String) {
   try {
     await User.findOneAndUpdate(
       { id: user.userId },
-      { $set: { wakeUpTime: time, buttonType: 'disabled-waiting' } },
+      { $set: { wakeUpTime: time, buttonType: "disabled-waiting" } },
       { upsert: true }
     )
 
-    revalidatePath('/profile')
-    revalidatePath('/')
+    revalidatePath("/profile")
+    revalidatePath("/")
     return true
   } catch (err: any) {
     console.log(err)
@@ -83,7 +83,7 @@ export async function completePushups() {
 
   const user = auth()
 
-  if (!user.userId) return { error: 'Not logged in?' }
+  if (!user.userId) return { error: "Not logged in?" }
 
   try {
     await User.findOneAndUpdate(
@@ -92,7 +92,7 @@ export async function completePushups() {
       { upsert: true }
     )
 
-    revalidatePath('/profile')
+    revalidatePath("/profile")
     return {}
   } catch (err: any) {
     console.log(err)
@@ -111,7 +111,7 @@ export async function checkIn() {
     const mongoUser = await User.findOneAndUpdate(
       { id: user.userId },
       {
-        $set: { buttonType: 'good' },
+        $set: { buttonType: "good" },
         $push: { checkins: true },
         $inc: { streak: 1 },
       },
@@ -119,12 +119,12 @@ export async function checkIn() {
     )
 
     const team = await Team.findOne({ teamId: mongoUser.teamId }).populate({
-      path: 'members',
+      path: "members",
       model: User,
     })
 
     const giveTeamPoint = team.members.every(
-      (member: any) => member.buttonType === 'good'
+      (member: any) => member.buttonType === "good"
     )
 
     if (giveTeamPoint) {
@@ -143,15 +143,49 @@ export async function checkIn() {
         await sendNotification(user.pushSubscription, {
           title: `Go ${team.teamName}! 🎉`,
           options: {
-            body: 'Your team has earned a point for everyone checking in!',
+            body: "Your team has earned a point for everyone checking in!",
           },
         })
       })
     }
 
-    revalidatePath('/')
-    revalidatePath('/profile')
-    revalidatePath('/team')
+    if (
+      !team.members.some(
+        (member: User) =>
+          member.buttonType === "waiting" ||
+          member.buttonType === "disabled-waiting"
+      )
+    ) {
+      const badCount = team.members.reduce((acc: number, member: User) => {
+        if (member.buttonType === "bad") return acc + 1
+        return acc
+      }, 0)
+
+      if (badCount) {
+        team.pushupCount = badCount * 10
+        await team.save()
+
+        team.members.forEach(async (user: any) => {
+          await User.findOneAndUpdate(
+            { id: user.id },
+            { activePushups: true },
+            { upsert: true }
+          )
+          if (user.pushSubscription) {
+            await sendNotification(user.pushSubscription, {
+              title: `Your team earned ${badCount * 10} pushups 😬`,
+              options: {
+                body: "Once completed, tap the push-up button on your profile!",
+              },
+            })
+          }
+        })
+      }
+    }
+
+    revalidatePath("/")
+    revalidatePath("/profile")
+    revalidatePath("/team")
     return true
   } catch (err: any) {
     console.log(err)
