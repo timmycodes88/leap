@@ -4,9 +4,11 @@ import ActionTooltip from './ActionTooltip'
 export default function Streak({
   streak,
   type = '',
+  isLeft = false,
 }: {
   streak: number
   type?: 'team' | ''
+  isLeft?: boolean
 }) {
   const times = {
     year: type === 'team' ? 52 : 240,
@@ -24,6 +26,7 @@ export default function Streak({
           ? `No${type === 'team' ? ' Week' : ''} Streak 🥲`
           : `${streak} ${type === 'team' ? 'week' : 'day'} streak!`
       }
+      isLeft={isLeft}
     >
       <button className='flex gap-1'>
         <span>{streak || 0}</span>

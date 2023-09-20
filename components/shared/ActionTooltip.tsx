@@ -12,13 +12,14 @@ import {
 import { createPortal } from 'react-dom'
 
 export default function ActionTooltip({
+  isLeft = false,
   label,
   children,
 }: {
+  isLeft?: boolean
   label: string
   children: React.ReactNode
 }) {
-  const isLeft = usePathname() === '/'
   const [open, setOpen] = useState(false)
   const onClick = () => setOpen(prev => !prev)
   const tooltipRef = useRef<HTMLSpanElement>(null)
@@ -32,7 +33,7 @@ export default function ActionTooltip({
 
       tooltip.style.top = `${top - 40}px`
       tooltip.style.left = `${
-        isLeft ? left - 70 : left - (tooltip.offsetWidth - width) / 2
+        isLeft ? left - 110 : left - (tooltip.offsetWidth - width) / 2
       }px`
     }
 

@@ -75,7 +75,7 @@ function Bar({ myTeam, teamName, progress, color, streak }: BarProps) {
         >
           {teamName}
         </p>
-        <Streak streak={streak} type='team' />
+        <Streak isLeft streak={streak} type='team' />
       </div>
       <div className='relative rounded-full h-6 w-full bg-gray-600'>
         <div
