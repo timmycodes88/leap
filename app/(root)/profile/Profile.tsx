@@ -1,15 +1,18 @@
 import SetTime from '@/components/forms/SetTime'
-import Card from '@/components/layout/Card'
+import Card from '@/components/modals/layout/Card'
 import User from '@/lib/models/user.model'
 import Image from 'next/image'
 import Intentions from './Intentions'
 import { cn } from '@/lib/utils'
 import ActionTooltip from '@/components/shared/ActionTooltip'
 import Streak from '@/components/shared/Streak'
+import Button from '@/components/ui/Button'
+import CompletePushups from '@/components/forms/CompletePushups'
 interface ProfileProps {
   user: User
   teamPage?: boolean
   last?: boolean
+  pushupCount?: number
 }
 
 const icons = {
@@ -17,7 +20,12 @@ const icons = {
   bad: '/svg/no-touch-white.svg',
 }
 
-export default function Profile({ user, teamPage, last }: ProfileProps) {
+export default function Profile({
+  user,
+  teamPage,
+  last,
+  pushupCount,
+}: ProfileProps) {
   const checkins = user.checkins || []
   const blankFill = new Array(5 - Math.min(checkins.length, 5)).fill('blank')
 
@@ -31,6 +39,23 @@ export default function Profile({ user, teamPage, last }: ProfileProps) {
             <span className='text-xl'>{user.name}</span>
             <span className='text-gray-500 text-xs'>@{user.username}</span>
           </div>
+
+          {!!pushupCount &&
+            (user.activePushups ? (
+              <div className='flex flex-col gap-1 text-center items-center justifiy-center'>
+                <span className='text-sm text-gray-100'>Pushups</span>
+                {teamPage ? (
+                  <span className='text-xs text-gray-500'>Incomplete</span>
+                ) : (
+                  <CompletePushups />
+                )}
+              </div>
+            ) : (
+              <div className='flex flex-col gap-1 text-center items-center justifiy-center'>
+                <span className='text-sm text-gray-100'>Pushups</span>
+                <span className='text-xs text-gray-500'>Completed</span>
+              </div>
+            ))}
           <div>
             {teamPage ? (
               <p>

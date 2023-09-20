@@ -15,6 +15,7 @@ export default async function page() {
       <Heading title='Profile' />
       <Profile user={user} />
       <AdaptiveButton type='profile' />
+      <div className='h-[150px]' />
     </div>
   )
 }

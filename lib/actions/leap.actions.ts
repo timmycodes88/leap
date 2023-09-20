@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache'
 import User from '../models/user.model'
 import { connectToDB } from '../mongoose'
 import Team from '../models/team.model'
+import { sendNotification } from '../sendNotification'
 
 export async function updateButton(
   day: number,
@@ -32,7 +33,12 @@ export async function updateButton(
       if (nowHours >= 13) {
         await User.findOneAndUpdate(
           { id: user.id },
-          { buttonType: 'disabled-waiting' },
+          { $set: { buttonType: 'disabled-waiting', activePushups: false } },
+          { upsert: true }
+        )
+        await Team.findOneAndUpdate(
+          { teamId: user.teamId },
+          { pushupCount: 0 },
           { upsert: true }
         )
       }
@@ -51,7 +57,8 @@ export async function updateButton(
       if (
         nowHours === hours - 1 ||
         (minutes < 40 && nowHours === hours && nowMinutes <= minutes + 15) ||
-        (minutes >= 40 && nowHours === hours + 1 && nowMinutes <= 10)
+        (minutes >= 40 &&
+          (nowHours === hours || (nowHours === hours + 1 && nowMinutes < 10)))
       ) {
         //Activate Users Button
         await User.findOneAndUpdate(
@@ -80,11 +87,51 @@ export async function updateButton(
           },
           { upsert: true }
         )
-        await Team.findOneAndUpdate(
+        const team = await Team.findOneAndUpdate(
           { teamId: user.teamId },
           { $set: { streak: 0 } },
           { upsert: true }
+        ).populate({
+          path: 'members',
+          model: User,
+        })
+
+        if (
+          team.members.some(
+            (member: User) =>
+              member.buttonType === 'waiting' ||
+              member.buttonType === 'disabled-waiting'
+          )
         )
+          return
+
+        const badCount = team.members.reduce((acc: number, member: User) => {
+          if (member.buttonType === 'bad') return acc + 1
+          return acc
+        }, 0)
+
+        if (badCount) {
+          team.pushupCount = badCount * 10
+          await team.save()
+
+          const users = await User.find({
+            teamId: team.teamId,
+          })
+          users.forEach(async user => {
+            await User.findOneAndUpdate(
+              { id: user.id },
+              { activePushups: true },
+              { upsert: true }
+            )
+            if (!user.pushSubscription) return
+            await sendNotification(user.pushSubscription, {
+              title: `Your team earned ${badCount * 10} pushups 😬`,
+              options: {
+                body: 'Once completed, tap the push-up button on your profile!',
+              },
+            })
+          })
+        }
       }
     })
 

@@ -78,6 +78,28 @@ export async function updateTime(time: String) {
   }
 }
 
+export async function completePushups() {
+  connectToDB()
+
+  const user = auth()
+
+  if (!user.userId) return { error: 'Not logged in?' }
+
+  try {
+    await User.findOneAndUpdate(
+      { id: user.userId },
+      { $set: { activePushups: false } },
+      { upsert: true }
+    )
+
+    revalidatePath('/profile')
+    return {}
+  } catch (err: any) {
+    console.log(err)
+    return { error: err.message }
+  }
+}
+
 export async function checkIn() {
   connectToDB()
 
@@ -119,7 +141,7 @@ export async function checkIn() {
       users.forEach(async user => {
         if (!user.pushSubscription) return
         await sendNotification(user.pushSubscription, {
-          title: `Go ${team.name}! 🎉`,
+          title: `Go ${team.teamName}! 🎉`,
           options: {
             body: 'Your team has earned a point for everyone checking in!',
           },

@@ -21,6 +21,7 @@ export default async function page() {
           (u: { username: string }) => u.username !== user.username
         )}
         streak={team.streak || 0}
+        pushupCount={team.pushupCount || 0}
       />
       <AdaptiveButton type='team' />
     </div>

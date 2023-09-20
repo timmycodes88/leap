@@ -10,7 +10,7 @@ import {
   DialogTitle,
 } from '../ui/dialog'
 import Button from '../ui/Button'
-import { useState } from 'react'
+import { use, useEffect, useRef, useState } from 'react'
 import { Loader2 } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { setIntention } from '@/lib/actions/intention.actions'
@@ -35,6 +35,12 @@ export default function SetIntentionModal() {
     close()
   }
 
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+
+  useEffect(() => {
+    if (textareaRef.current) textareaRef.current.blur()
+  }, [])
+
   return (
     <Dialog open onOpenChange={close}>
       <DialogContent className='bg-gray-900 rounded-lg'>
@@ -49,10 +55,7 @@ export default function SetIntentionModal() {
         <DialogFooter>
           <div className='flex w-full flex-col gap-8'>
             <textarea
-              onFocus={e => e.preventDefault()}
-              className='opacity-0 max-h-0 -mb-8'
-            />
-            <textarea
+              ref={textareaRef}
               value={text}
               onChange={e => setText(e.target.value)}
               className='w-full h-40 outline-none focus-visible:ring-0 focus-visible:ring-offset-0 resize-none p-2 rounded-lg bg-gray-800'

@@ -3,7 +3,7 @@
 
 import { cn } from '@/lib/utils'
 import Card from './Card'
-import Streak from '../shared/Streak'
+import Streak from '../../shared/Streak'
 
 interface BarChartProps {
   teams: any[]

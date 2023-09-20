@@ -1,7 +1,7 @@
 import { getUser } from '@/lib/actions/user.actions'
 import { UserButton } from '@clerk/nextjs'
 import Link from 'next/link'
-import NotificationButton from '../shared/NotificationButton'
+import NotificationButton from '../../shared/NotificationButton'
 
 export default async function Header() {
   const { isAdmin } = await getUser()

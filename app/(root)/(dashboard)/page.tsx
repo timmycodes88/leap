@@ -1,6 +1,6 @@
 import AdaptiveButton from '@/components/shared/AdaptiveButton'
-import BarChart from '@/components/layout/BarChart'
-import QuoteBox from '@/components/layout/QuoteBox'
+import BarChart from '@/components/modals/layout/BarChart'
+import QuoteBox from '@/components/modals/layout/QuoteBox'
 import Heading from '@/components/shared/Heading'
 import { getUser } from '@/lib/actions/user.actions'
 import { redirect } from 'next/navigation'

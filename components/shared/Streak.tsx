@@ -8,15 +8,20 @@ export default function Streak({
   streak: number
   type?: 'team' | ''
 }) {
+  const times = {
+    year: type === 'team' ? 52 : 240,
+    month: type === 'team' ? 4 : 20,
+  }
+
   return (
     <ActionTooltip
       label={
-        streak > 365
+        streak > times.year
           ? `${type === 'team' ? streak / 52 : streak / 20 / 12} year streak!`
-          : streak > 30
+          : streak > times.month
           ? `${type === 'team' ? streak / 4 : streak / 20} month streak!`
           : !streak
-          ? 'No Streak 🥲'
+          ? `No${type === 'team' ? ' Week' : ''} Streak 🥲`
           : `${streak} ${type === 'team' ? 'week' : 'day'} streak!`
       }
     >

@@ -31,6 +31,10 @@ const teamSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  pushupCount: {
+    type: Number,
+    default: 0,
+  },
 })
 
 const Team = mongoose.models.Team || mongoose.model('Team', teamSchema)

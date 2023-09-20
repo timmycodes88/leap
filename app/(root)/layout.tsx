@@ -1,5 +1,5 @@
-import BottomNav from '@/components/layout/BottomNav'
-import Header from '@/components/layout/Header'
+import BottomNav from '@/components/modals/layout/BottomNav'
+import Header from '@/components/modals/layout/Header'
 import ModalProvider from '@/components/providers/ModalProvider'
 import Refresher from '@/components/shared/Refresher'
 

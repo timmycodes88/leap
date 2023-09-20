@@ -1,6 +1,6 @@
 import User from '@/lib/models/user.model'
 import Profile from '../profile/Profile'
-import Card from '@/components/layout/Card'
+import Card from '@/components/modals/layout/Card'
 import Streak from '@/components/shared/Streak'
 
 interface TeamProps {
@@ -8,9 +8,16 @@ interface TeamProps {
   teamId: string
   teamName: string
   streak: number
+  pushupCount: number
 }
 
-export default function Team({ members, teamId, teamName, streak }: TeamProps) {
+export default function Team({
+  members,
+  teamId,
+  teamName,
+  streak,
+  pushupCount,
+}: TeamProps) {
   return (
     <div className='flex flex-col gap-4 mb-20'>
       <Card>
@@ -30,6 +37,7 @@ export default function Team({ members, teamId, teamName, streak }: TeamProps) {
             last={i === members.length - 1}
             key={member.id}
             user={member}
+            pushupCount={pushupCount}
             teamPage
           />
         )

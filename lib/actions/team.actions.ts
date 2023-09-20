@@ -10,6 +10,7 @@ export async function createTeam(teamName: string) {
 
   const user = auth()
   if (!user.userId) return { success: false, message: 'Not logged in' }
+  if (!teamName) return { success: false, message: 'No team name provided' }
 
   try {
     // Check if Team Name is taken

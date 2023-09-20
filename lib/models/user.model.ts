@@ -10,6 +10,10 @@ interface User {
   buttonType: 'waiting' | 'good' | 'bad' | 'disabled-waiting' | undefined
   checkins?: boolean[]
   streak: number
+  isAdmin: boolean
+  intentions: string[]
+  pushSubscription?: object
+  activePushups: boolean
 }
 
 const userSchema = new mongoose.Schema({
@@ -56,6 +60,10 @@ const userSchema = new mongoose.Schema({
   },
   pushSubscription: {
     type: Object,
+  },
+  activePushups: {
+    type: Boolean,
+    default: false,
   },
 })
 
