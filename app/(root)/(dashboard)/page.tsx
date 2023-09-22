@@ -39,7 +39,9 @@ export default async function page() {
       <QuoteBox quote={quote.quote} author={quote.author} />
       <BarChart
         teams={teams
-          .sort((t, t2) => t.progress - t2.progress)
+          .filter(t => !!t.teamId)
+          .sort((t, t2) => t2.weeklyPoints.length - t.weeklyPoints.length)
+          .sort((t, t2) => t2.streak - t.streak)
           .sort(t => (t.teamId === user.teamId ? -1 : 1))}
         userId={user.id}
       />

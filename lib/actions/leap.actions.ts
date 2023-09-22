@@ -54,12 +54,15 @@ export async function updateButton(
       const hours = parseInt(time[0])
       const minutes = parseInt(time[1])
 
-      if (
-        nowHours === hours - 1 ||
-        (minutes < 40 && nowHours === hours && nowMinutes <= minutes + 15) ||
-        (minutes >= 40 &&
-          (nowHours === hours || (nowHours === hours + 1 && nowMinutes < 10)))
-      ) {
+      const c =
+        minutes < 40 &&
+        (nowHours === hours - 1 ||
+          (nowHours === hours && nowMinutes <= minutes + 15))
+      const d =
+        minutes >= 40 &&
+        (nowHours === hours || (nowHours === hours + 1 && nowMinutes <= 10))
+
+      if (d || c) {
         //Activate Users Button
         await User.findOneAndUpdate(
           { id: user.id },
@@ -72,10 +75,10 @@ export async function updateButton(
 
       const a =
         minutes < 40 &&
-        ((nowHours === hours && nowMinutes >= minutes + 15) || nowHours > hours)
+        ((nowHours === hours && nowMinutes > minutes + 16) || nowHours > hours)
       const b =
         minutes >= 40 &&
-        ((nowHours === hours + 1 && nowMinutes >= 10) || nowHours > hours + 1)
+        ((nowHours === hours + 1 && nowMinutes > 11) || nowHours > hours + 2)
 
       if (a || b) {
         //Deactivate Users Button

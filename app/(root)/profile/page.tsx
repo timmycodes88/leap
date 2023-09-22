@@ -10,10 +10,12 @@ export default async function page() {
   if (!user) redirect('/onboarding/1')
   if (!user.teamId) redirect('/onboarding/2')
 
+  const team = await getTeam(user.teamId)
+
   return (
     <div className='h-full'>
       <Heading title='Profile' />
-      <Profile user={user} />
+      <Profile user={user} pushupCount={team.pushupCount} />
       <AdaptiveButton type='profile' />
       <div className='h-[150px]' />
     </div>

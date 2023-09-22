@@ -30,6 +30,13 @@ export default function Team({
           </div>
         </div>
       </Card>
+      {!!pushupCount && (
+        <Card>
+          <div className='flex justify-center items-center'>
+            <p className='text-lg text-gray-500'>{pushupCount} team pushups</p>
+          </div>
+        </Card>
+      )}
       <div className='h-[0.1rem] w-full bg-gray-500/50 rounded-full' />
       {members.map((member, i) => {
         return (
