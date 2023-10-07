@@ -14,6 +14,7 @@ interface User {
   intentions: string[]
   pushSubscription?: object
   activePushups: boolean
+  sleepMode: boolean
 }
 
 const userSchema = new mongoose.Schema({
@@ -62,6 +63,10 @@ const userSchema = new mongoose.Schema({
     type: Object,
   },
   activePushups: {
+    type: Boolean,
+    default: false,
+  },
+  sleepMode: {
     type: Boolean,
     default: false,
   },

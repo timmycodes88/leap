@@ -2,7 +2,7 @@
 
 import { updateButton } from '@/lib/actions/leap.actions'
 import { usePathname, useRouter } from 'next/navigation'
-import { use, useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { Toaster } from 'react-hot-toast'
 
 export default function Provider() {
@@ -12,6 +12,7 @@ export default function Provider() {
   //Update Buttons for All Users
   useEffect(() => {
     const i = setInterval(() => {
+      console.log('Updating Button')
       const userNow = new Date()
       const day = userNow.getDay()
       const nowHours = userNow.getHours()

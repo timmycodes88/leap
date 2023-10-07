@@ -32,7 +32,7 @@ export default function Profile({
   const checkinsArr = [...checkins, ...blankFill]
 
   return (
-    <div className='flex flex-col gap-4'>
+    <div className={cn('flex flex-col gap-4', user.sleepMode && 'opacity-50')}>
       <Card>
         <div className='flex justify-between items-center gap-2'>
           <div className='flex flex-col'>
@@ -40,7 +40,16 @@ export default function Profile({
             <span className='text-gray-500 text-xs'>@{user.username}</span>
           </div>
 
-          {!!pushupCount &&
+          {user.sleepMode ? (
+            <div className='flex flex-col gap-1 text-center items-center justifiy-center'>
+              {teamPage ? (
+                <span className='text-xs text-gray-500'>In Sleep Mode</span>
+              ) : (
+                <span className='text-xs text-gray-500'>In Sleep Mode</span>
+              )}
+            </div>
+          ) : (
+            !!pushupCount &&
             (user.activePushups ? (
               <div className='flex flex-col gap-1 text-center items-center justifiy-center'>
                 <span className='text-sm text-gray-100'>Pushups</span>
@@ -55,7 +64,8 @@ export default function Profile({
                 <span className='text-sm text-gray-100'>Pushups</span>
                 <span className='text-xs text-gray-500'>Completed</span>
               </div>
-            ))}
+            ))
+          )}
           <div>
             {teamPage ? (
               <p>

@@ -2,7 +2,6 @@ import { ClerkProvider } from '@clerk/nextjs'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import Provider from '@/components/shared/Provider'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
 import IPhoneInstall from '@/components/IPhoneInstall'
 
@@ -32,7 +31,6 @@ export default function RootLayout({
       <html lang='en' suppressHydrationWarning>
         <body className={inter.className}>
           <ThemeProvider attribute='class' defaultTheme='dark'>
-            <Provider />
             <IPhoneInstall />
             {children}
           </ThemeProvider>

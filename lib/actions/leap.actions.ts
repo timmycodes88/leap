@@ -43,6 +43,17 @@ export async function updateButton(
         )
       }
 
+      if (user.sleepMode) {
+        await User.findOneAndUpdate(
+          { id: user.id },
+          {
+            $set: { buttonType: 'good' },
+          },
+          { upsert: true }
+        )
+        return
+      }
+
       if (
         !user.wakeUpTime ||
         user.buttonType === 'good' ||
