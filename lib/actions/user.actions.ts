@@ -123,9 +123,9 @@ export async function checkIn() {
       model: User,
     })
 
-    const giveTeamPoint = team.members.every(
-      (member: any) => member.buttonType === "good"
-    )
+    const giveTeamPoint = team.members
+      .filter((u: any) => !!u.wakeUpTime)
+      .every((member: any) => member.buttonType === "good")
 
     if (giveTeamPoint) {
       const giveTeamStreak = team.weeklyPoints.length === 4 ? 1 : 0
@@ -150,16 +150,20 @@ export async function checkIn() {
     }
 
     if (
-      !team.members.some(
-        (member: User) =>
-          member.buttonType === "waiting" ||
-          member.buttonType === "disabled-waiting"
-      )
+      !team.members
+        .filter((u: any) => !!u.wakeUpTime)
+        .some(
+          (member: User) =>
+            member.buttonType === "waiting" ||
+            member.buttonType === "disabled-waiting"
+        )
     ) {
-      const badCount = team.members.reduce((acc: number, member: User) => {
-        if (member.buttonType === "bad") return acc + 1
-        return acc
-      }, 0)
+      const badCount = team.members
+        .filter((u: any) => !!u.wakeUpTime)
+        .reduce((acc: number, member: User) => {
+          if (member.buttonType === "bad") return acc + 1
+          return acc
+        }, 0)
 
       if (badCount) {
         team.pushupCount = badCount * 10
